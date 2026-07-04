@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sagar Verma — Creative Graphic Designer &amp; Video Editor</title>
+<meta name="description" content="Sagar Verma is a freelance graphic designer and video editor specializing in wedding highlight films, cinematic edits, business reels, and premium brand design.">
+<meta name="keywords" content="graphic designer, video editor, wedding film editor, reels editor, freelancer, Sagar Verma">
+<meta property="og:title" content="Sagar Verma — Creative Graphic Designer & Video Editor">
+<meta property="og:description" content="Designs that capture attention. Videos that tell stories. Content that grows businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --black:#080706;
+    --panel:#121009;
+    --panel-2:#17140d;
+    --line:rgba(201,162,75,0.16);
+    --gold:#c9a24b;
+    --gold-bright:#eccf8b;
+    --gold-dim:#8a6f34;
+    --ivory:#f2ede1;
+    --muted:#8f887a;
+    --serif:'Playfair Display', serif;
+    --sans:'Jost', sans-serif;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--ivory);
+    font-family:var(--sans);
+    font-weight:300;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  @media (max-width:900px){ body{ cursor:auto; } }
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  section{position:relative;}
+  ::selection{background:var(--gold);color:var(--black);}
+
+  /* ---------- custom cursor ---------- */
+  .cursor-dot, .cursor-ring{
+    position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+    border-radius:50%;transform:translate(-50%,-50%);
+  }
+  .cursor-dot{width:6px;height:6px;background:var(--gold-bright);}
+  .cursor-ring{width:34px;height:34px;border:1px solid var(--gold);transition:width .25s var(--ease),height .25s var(--ease),opacity .25s var(--ease),border-color .25s;}
+  .cursor-ring.grow{width:64px;height:64px;background:rgba(201,162,75,0.08);border-color:var(--gold-bright);}
+  @media (max-width:900px){ .cursor-dot,.cursor-ring{display:none;} }
+
+  /* ---------- scroll progress ---------- */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--gold-dim),var(--gold-bright));
+    z-index:9998;transition:width .1s linear;
+  }
+
+  /* ---------- loader ---------- */
+  #loader{
+    position:fixed;inset:0;background:var(--black);z-index:10000;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;
+    transition:opacity .8s var(--ease), visibility .8s var(--ease);
+  }
+  #loader.hide{opacity:0;visibility:hidden;}
+  .loader-mark{font-family:var(--serif);font-size:2.2rem;letter-spacing:.08em;color:var(--gold-bright);
+    opacity:0; animation:loaderFade 1.4s var(--ease) forwards;}
+  .loader-bar{width:180px;height:1px;background:rgba(201,162,75,.25);position:relative;overflow:hidden;}
+  .loader-bar::after{content:'';position:absolute;left:-40%;top:0;height:100%;width:40%;
+    background:var(--gold-bright);animation:loaderSlide 1.1s ease-in-out infinite;}
+  @keyframes loaderFade{to{opacity:1;}}
+  @keyframes loaderSlide{0%{left:-40%;}100%{left:100%;}}
+
+  /* ---------- floating shapes / ambient ---------- */
+  .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;}
+  .glow.g1{width:520px;height:520px;background:var(--gold);top:-160px;left:-160px;}
+  .glow.g2{width:420px;height:420px;background:var(--gold-dim);bottom:10%;right:-120px;}
+  .floating-shape{position:absolute;border:1px solid var(--line);border-radius:50%;opacity:.5;}
+
+  /* ---------- container ---------- */
+  .wrap{max-width:1240px;margin:0 auto;padding:0 6vw;}
+  @media (max-width:600px){ .wrap{padding:0 24px;} }
+
+  .eyebrow{
+    font-family:var(--sans);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:18px;font-weight:500;
+  }
+  .eyebrow::before{content:'';width:28px;height:1px;background:var(--gold);}
+
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.08;color:var(--ivory);}
+  .section-title{font-size:clamp(2rem,4vw,3rem);margin-bottom:20px;}
+  .section-lead{max-width:560px;color:var(--muted);font-size:1.02rem;line-height:1.75;font-weight:300;}
+
+  /* ---------- navbar ---------- */
+  header{
+    position:fixed;top:0;left:0;width:100%;z-index:500;
+    padding:22px 6vw;display:flex;align-items:center;justify-content:space-between;
+    transition:padding .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    padding:14px 6vw;background:rgba(8,7,6,0.86);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:var(--serif);font-size:1.35rem;letter-spacing:.02em;color:var(--ivory);}
+  .logo span{color:var(--gold-bright);}
+  nav ul{display:flex;gap:38px;}
+  nav a{font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ivory);position:relative;padding-bottom:4px;}
+  nav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold-bright);transition:width .35s var(--ease);}
+  nav a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--gold);padding:10px 22px;border-radius:999px;font-size:.78rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--gold-bright);transition:all .35s var(--ease);
+  }
+  .nav-cta:hover{background:var(--gold);color:var(--black);}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:600;}
+  .burger span{width:26px;height:1px;background:var(--ivory);transition:.3s;}
+  @media (max-width:900px){
+    nav{position:fixed;top:0;right:-100%;width:78%;max-width:340px;height:100vh;background:var(--panel);
+      flex-direction:column;justify-content:center;align-items:flex-start;padding:0 40px;transition:right .5s var(--ease);
+      border-left:1px solid var(--line);}
+    nav.open{right:0;}
+    nav ul{flex-direction:column;gap:28px;}
+    .nav-cta{margin-top:30px;display:inline-block;}
+    .burger{display:flex;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;padding-bottom:60px;position:relative;}
+  .hero-top{position:relative;z-index:2;}
+  .hero-top .eyebrow{justify-content:center;}
+  .hero-top{text-align:center;margin:0 auto 46px;}
+  .hero h1{
+    font-size:clamp(2.2rem,5.6vw,4.6rem);letter-spacing:-0.01em;
+  }
+  .hero h1 .line{display:block;overflow:hidden;}
+  .hero h1 .line span{display:inline-block;transform:translateY(110%);animation:riseLine .9s var(--ease) forwards;}
+  .hero h1 .line:nth-child(1) span{animation-delay:.15s;}
+  .hero h1 .line:nth-child(2) span{animation-delay:.32s;color:var(--gold-bright);}
+  .hero h1 .line:nth-child(3) span{animation-delay:.49s;}
+  @keyframes riseLine{to{transform:translateY(0);}}
+  .hero-sub{
+    max-width:640px;margin:26px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.8;
+    opacity:0;animation:fadeUp 1s var(--ease) forwards;animation-delay:.75s;
+  }
+  .hero-ctas{display:flex;gap:18px;justify-content:center;margin-top:36px;flex-wrap:wrap;
+    opacity:0;animation:fadeUp 1s var(--ease) forwards;animation-delay:.95s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+  .btn{
+    font-family:var(--sans);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;
+    padding:16px 34px;border-radius:999px;display:inline-flex;align-items:center;gap:10px;
+    position:relative;overflow:hidden;transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+    font-weight:500;
+  }
+  .btn-primary{background:linear-gradient(120deg,var(--gold-dim),var(--gold-bright));color:var(--black);}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 34px -12px rgba(201,162,75,.55);}
+  .btn-outline{border:1px solid var(--line);color:var(--ivory);}
+  .btn-outline:hover{border-color:var(--gold-bright);color:var(--gold-bright);transform:translateY(-3px);}
+  .btn-whatsapp{border:1px solid #2f5a3f;color:#8fd6a8;}
+  .btn-whatsapp:hover{background:#1c3326;transform:translateY(-3px);}
+
+  /* triptych */
+  .triptych{display:flex;gap:14px;height:56vh;min-height:360px;max-width:1240px;margin:0 auto;position:relative;z-index:2;}
+  .panel{
+    position:relative;flex:1;border-radius:14px;overflow:hidden;cursor:pointer;
+    transition:flex .6s var(--ease);border:1px solid var(--line);
+  }
+  .panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:grayscale(70%) contrast(1.05) brightness(.55) sepia(18%);transition:filter .6s var(--ease), transform 8s linear;}
+  .panel:hover img{filter:grayscale(10%) contrast(1.08) brightness(.66) sepia(12%);transform:scale(1.06);}
+  .panel:hover{flex:1.7;}
+  .panel-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,7,6,0) 30%,rgba(8,7,6,.92) 100%);}
+  .panel-content{position:absolute;left:0;right:0;bottom:0;padding:26px;z-index:2;}
+  .panel-num{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:.85rem;}
+  .panel-title{font-family:var(--serif);font-size:1.3rem;margin-top:6px;white-space:nowrap;}
+  @media (max-width:800px){
+    .triptych{flex-direction:column;height:auto;}
+    .panel{height:150px;}
+    .panel:hover{flex:1;}
+  }
+
+  /* ---------- services ---------- */
+  .services{padding:150px 0 120px;}
+  .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:60px;}
+  @media (max-width:960px){ .service-grid{grid-template-columns:1fr;} }
+  .service-card{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:18px;padding:40px 32px;position:relative;overflow:hidden;
+    transition:transform .5s var(--ease), border-color .5s var(--ease);
+  }
+  .service-card::before{
+    content:'';position:absolute;top:-1px;left:-1px;right:-1px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);
+    opacity:0;transition:opacity .5s;
+  }
+  .service-card:hover{transform:translateY(-10px);border-color:var(--gold-dim);}
+  .service-card:hover::before{opacity:1;}
+  .service-icon{
+    width:58px;height:58px;border-radius:50%;border:1px solid var(--gold-dim);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--gold-bright);
+    margin-bottom:26px;transition:background .4s, color .4s;
+  }
+  .service-card:hover .service-icon{background:var(--gold-bright);color:var(--black);}
+  .service-card h3{font-size:1.5rem;margin-bottom:8px;}
+  .service-card .service-tag{color:var(--gold);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px;display:block;}
+  .service-list{margin-top:22px;display:flex;flex-wrap:wrap;gap:9px;}
+  .service-list li{
+    font-size:.78rem;color:var(--muted);border:1px solid var(--line);padding:7px 14px;border-radius:999px;
+    transition:.3s;
+  }
+  .service-card:hover .service-list li{border-color:rgba(201,162,75,.3);color:var(--ivory);}
+
+  /* ---------- about ---------- */
+  .about{padding:100px 0;}
+  .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;align-items:center;}
+  @media (max-width:900px){ .about-grid{grid-template-columns:1fr;gap:40px;} }
+  .about-visual{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;border:1px solid var(--line);}
+  .about-visual img{width:100%;height:100%;object-fit:cover;filter:grayscale(35%) contrast(1.05);}
+  .about-frame{position:absolute;inset:18px;border:1px solid var(--gold-dim);border-radius:12px;pointer-events:none;}
+  .counters{display:flex;gap:0;margin-top:44px;border-top:1px solid var(--line);padding-top:30px;}
+  .counter{flex:1;padding-right:20px;}
+  .counter .num{font-family:var(--serif);font-size:2.2rem;color:var(--gold-bright);}
+  .counter .label{font-size:.78rem;color:var(--muted);letter-spacing:.05em;margin-top:4px;text-transform:uppercase;}
+  .about-text p{color:var(--muted);line-height:1.85;margin-bottom:18px;font-size:1.02rem;}
+  .about-text p:first-child{color:var(--ivory);font-size:1.15rem;}
+
+  /* ---------- portfolio ---------- */
+  .portfolio{padding:120px 0;}
+  .filter-row{display:flex;gap:12px;flex-wrap:wrap;margin:44px 0 46px;}
+  .filter-btn{
+    font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;padding:10px 20px;border-radius:999px;
+    border:1px solid var(--line);color:var(--muted);transition:.3s;cursor:pointer;background:transparent;font-family:var(--sans);
+  }
+  .filter-btn.active,.filter-btn:hover{border-color:var(--gold-bright);color:var(--gold-bright);}
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media (max-width:900px){ .portfolio-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .portfolio-grid{grid-template-columns:1fr;} }
+  .p-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line);}
+  .p-card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);}
+  .p-card:hover img{transform:scale(1.12);}
+  .p-overlay{
+    position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,7,6,0) 40%,rgba(8,7,6,.95) 100%);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:24px;
+  }
+  .p-cat{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
+  .p-name{font-family:var(--serif);font-size:1.2rem;margin-top:6px;}
+  .p-icon{
+    position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:50%;
+    background:rgba(8,7,6,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line);opacity:0;transform:translateY(-8px);transition:.4s var(--ease);color:var(--gold-bright);
+  }
+  .p-card:hover .p-icon{opacity:1;transform:translateY(0);}
+
+  /* ---------- why choose ---------- */
+  .why{padding:120px 0;}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:60px;border-radius:18px;overflow:hidden;}
+  @media (max-width:900px){ .why-grid{grid-template-columns:repeat(2,1fr);} }
+  .why-item{background:var(--panel);padding:40px 28px;transition:background .4s;}
+  .why-item:hover{background:var(--panel-2);}
+  .why-item i{color:var(--gold-bright);font-size:1.5rem;margin-bottom:18px;display:block;}
+  .why-item h4{font-size:1.05rem;font-weight:500;font-family:var(--sans);color:var(--ivory);}
+
+  /* ---------- testimonials ---------- */
+  .testimonials{padding:120px 0;}
+  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:60px;}
+  @media (max-width:900px){ .t-grid{grid-template-columns:1fr;} }
+  .t-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:38px 32px;position:relative;
+  }
+  .t-stars{color:var(--gold-bright);font-size:.85rem;letter-spacing:2px;margin-bottom:20px;}
+  .t-quote{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.65;color:var(--ivory);margin-bottom:26px;}
+  .t-name{font-size:.85rem;color:var(--gold);letter-spacing:.05em;text-transform:uppercase;}
+  .t-role{font-size:.78rem;color:var(--muted);margin-top:2px;}
+
+  /* ---------- skills ---------- */
+  .skills{padding:120px 0;}
+  .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:60px;}
+  @media (max-width:800px){ .skills-grid{grid-template-columns:1fr;gap:40px;} }
+  .skill-group h3{font-family:var(--sans);font-weight:500;color:var(--gold);font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:26px;}
+  .skill-row{margin-bottom:20px;}
+  .skill-row .top{display:flex;justify-content:space-between;font-size:.92rem;margin-bottom:9px;color:var(--ivory);}
+  .bar{height:2px;background:var(--line);position:relative;overflow:hidden;border-radius:2px;}
+  .bar span{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold-bright));width:0;transition:width 1.4s var(--ease);}
+
+  /* ---------- contact ---------- */
+  .contact{padding:120px 0;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:70px;}
+  @media (max-width:900px){ .contact-grid{grid-template-columns:1fr;gap:50px;} }
+  .contact-cards{display:flex;flex-direction:column;gap:16px;margin-top:36px;}
+  .c-card{
+    display:flex;align-items:center;gap:18px;padding:22px;border:1px solid var(--line);border-radius:14px;
+    transition:.35s var(--ease);background:var(--panel);
+  }
+  .c-card:hover{border-color:var(--gold-dim);transform:translateX(6px);}
+  .c-card i{width:44px;height:44px;border-radius:50%;border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;color:var(--gold-bright);flex-shrink:0;}
+  .c-card .c-label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .c-card .c-value{font-family:var(--serif);font-size:1.05rem;margin-top:3px;word-break:break-word;}
+
+  .form-group{margin-bottom:22px;}
+  .form-group label{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .form-group input, .form-group select, .form-group textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+    color:var(--ivory);font-family:var(--sans);font-size:1rem;padding:10px 4px;transition:border-color .35s;
+  }
+  .form-group select option{background:var(--panel);color:var(--ivory);}
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus{outline:none;border-color:var(--gold-bright);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media (max-width:560px){ .form-row{grid-template-columns:1fr;} }
+  .submit-btn{
+    margin-top:12px;width:100%;background:linear-gradient(120deg,var(--gold-dim),var(--gold-bright));
+    color:var(--black);border:none;padding:18px;border-radius:999px;font-family:var(--sans);font-size:.85rem;
+    letter-spacing:.1em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .submit-btn:hover{transform:translateY(-3px);box-shadow:0 14px 34px -12px rgba(201,162,75,.55);}
+  .form-note{font-size:.8rem;color:var(--muted);margin-top:14px;text-align:center;}
+
+  /* ---------- footer ---------- */
+  footer{padding:80px 0 30px;border-top:1px solid var(--line);margin-top:60px;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:50px;}
+  @media (max-width:800px){ .footer-grid{grid-template-columns:1fr;gap:40px;} }
+  .footer-logo{font-family:var(--serif);font-size:1.6rem;margin-bottom:14px;}
+  .footer-logo span{color:var(--gold-bright);}
+  .footer-tag{color:var(--muted);font-size:.92rem;line-height:1.7;max-width:320px;}
+  .footer-cta{margin-top:26px;}
+  .footer h5{font-size:.74rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
+  .footer-col a, .footer-col li{display:block;color:var(--muted);font-size:.92rem;margin-bottom:14px;transition:color .3s;}
+  .footer-col a:hover{color:var(--gold-bright);}
+  .footer-socials{display:flex;gap:12px;margin-top:20px;}
+  .footer-socials a{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ivory);transition:.3s;}
+  .footer-socials a:hover{border-color:var(--gold-bright);color:var(--gold-bright);}
+  .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:60px;padding-top:26px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease), transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* whatsapp float */
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;width:58px;height:58px;border-radius:50%;
+    background:#1f2d24;border:1px solid #2f5a3f;display:flex;align-items:center;justify-content:center;
+    color:#8fd6a8;font-size:1.4rem;z-index:400;box-shadow:0 10px 30px rgba(0,0,0,.4);
+    animation:pulse 2.6s infinite;
+  }
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(143,214,168,.35);}70%{box-shadow:0 0 0 16px rgba(143,214,168,0);}100%{box-shadow:0 0 0 0 rgba(143,214,168,0);}}
+
+  .skip-link{position:absolute;left:-999px;top:0;background:var(--gold);color:var(--black);padding:12px 20px;z-index:9999;}
+  .skip-link:focus{left:10px;top:10px;}
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:2px solid var(--gold-bright);outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<div id="loader"><div class="loader-mark">SAGAR VERMA</div><div class="loader-bar"></div></div>
+<div id="progress"></div>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<div class="ambient">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+</div>
+
+<header id="header">
+  <a href="#" class="logo">Sagar<span>Verma</span></a>
+  <nav id="nav">
+    <ul>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+      <li><a href="#reviews" class="nav-link">Reviews</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+  </nav>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="eyebrow">Freelance Designer &amp; Video Editor</div>
+      <h1>
+        <span class="line"><span>Designs That Capture Attention.</span></span>
+        <span class="line"><span>Videos That Tell Stories.</span></span>
+        <span class="line"><span>Content That Grows Businesses.</span></span>
+      </h1>
+      <p class="hero-sub">I help brands, creators, startups, wedding clients, and businesses stand out with premium graphic design, wedding highlight video editing, and business short-form video editing.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-handshake"></i> Hire Me</a>
+        <a href="#portfolio" class="btn btn-outline"><i class="fa-solid fa-images"></i> View Portfolio</a>
+        <a href="https://wa.me/917488925205" target="_blank" rel="noopener" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp Me</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="triptych wrap">
+    <div class="panel" data-target="services-design">
+      <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=900&q=80" alt="Graphic design workspace with color palettes and layouts">
+      <div class="panel-overlay"></div>
+      <div class="panel-content"><div class="panel-num">01 · Design</div><div class="panel-title">Graphic Design</div></div>
+    </div>
+    <div class="panel" data-target="services-wedding">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding rings and cinematic wedding detail shot">
+      <div class="panel-overlay"></div>
+      <div class="panel-content"><div class="panel-num">02 · Film</div><div class="panel-title">Wedding Editing</div></div>
+    </div>
+    <div class="panel" data-target="services-reels">
+      <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=900&q=80" alt="Camera and video production gear for short-form content">
+      <div class="panel-overlay"></div>
+      <div class="panel-content"><div class="panel-num">03 · Reels</div><div class="panel-title">Business Reels</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="eyebrow">What I Do</div>
+    <h2 class="section-title reveal">Three crafts. <br>One creative eye.</h2>
+    <p class="section-lead reveal">From a single logo to a full wedding film, every project gets the same attention to color, pacing, and story.</p>
+
+    <div class="service-grid">
+      <div class="service-card reveal" id="services-design">
+        <span class="service-tag">01</span>
+        <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+        <h3>Graphic Design</h3>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.7;">Clean, on-brand visuals built to stop the scroll and hold attention.</p>
+        <ul class="service-list">
+          <li>Social Media Posts</li><li>Instagram Posts</li><li>Facebook Ads</li><li>Banner Design</li>
+          <li>Poster Design</li><li>Flyer Design</li><li>Logo Design</li><li>Business Cards</li>
+          <li>Brochure Design</li><li>Thumbnail Design</li><li>Brand Identity</li>
+        </ul>
+      </div>
+
+      <div class="service-card reveal" id="services-wedding">
+        <span class="service-tag">02</span>
+        <div class="service-icon"><i class="fa-solid fa-film"></i></div>
+        <h3>Wedding Highlight Editing</h3>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.7;">Cinematic wedding films that feel like a movie, not a memory card.</p>
+        <ul class="service-list">
+          <li>Wedding Highlights</li><li>Cinematic Wedding Films</li><li>Couple Teasers</li>
+          <li>Reception Highlights</li><li>Engagement Videos</li><li>Color Grading</li>
+          <li>Sound Design</li><li>Smooth Transitions</li><li>Motion Graphics</li>
+        </ul>
+      </div>
+
+      <div class="service-card reveal" id="services-reels">
+        <span class="service-tag">03</span>
+        <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <h3>Business Short-Form Video</h3>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.7;">Scroll-stopping reels and shorts built to grow real businesses.</p>
+        <ul class="service-list">
+          <li>Instagram Reels</li><li>Facebook Reels</li><li>YouTube Shorts</li><li>Promotional Videos</li>
+          <li>Product Videos</li><li>Corporate Videos</li><li>Real Estate Videos</li><li>Restaurant Videos</li>
+          <li>Educational Videos</li><li>AI Voice Integration</li><li>Captions</li><li>Motion Graphics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <img src="https://images.unsplash.com/photo-1533228876829-65c94e7b5025?auto=format&fit=crop&w=900&q=80" alt="Video editing timeline with color grading on screen">
+      <div class="about-frame"></div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow">About Me</div>
+      <p class="reveal">Hello! I'm Sagar Verma, a passionate graphic designer and professional video editor.</p>
+      <p class="reveal">I specialize in creating eye-catching designs and engaging videos that help businesses grow, increase engagement, and build a strong online presence.</p>
+      <p class="reveal">Whether it's a wedding film, social media graphics, or short-form business videos, I focus on delivering premium quality with creativity and attention to detail.</p>
+
+      <div class="counters reveal">
+        <div class="counter"><div class="num" data-count="150">0</div><div class="label">Projects Delivered</div></div>
+        <div class="counter"><div class="num" data-count="80">0</div><div class="label">Happy Clients</div></div>
+        <div class="counter"><div class="num" data-count="4">0</div><div class="label">Years Experience</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="wrap">
+    <div class="eyebrow">Selected Work</div>
+    <h2 class="section-title reveal">A Portfolio Built<br>On Real Results.</h2>
+    <p class="section-lead reveal">Filter by category to see the kind of work I create for each type of client.</p>
+
+    <div class="filter-row reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="design">Graphic Design</button>
+      <button class="filter-btn" data-filter="wedding">Wedding Editing</button>
+      <button class="filter-btn" data-filter="reels">Business Reels</button>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="p-card reveal" data-cat="design"><img src="https://images.unsplash.com/photo-1626544827763-d516dce335e2?auto=format&fit=crop&w=700&q=80" alt="Social media design mockup"><div class="p-overlay"><div class="p-cat">Design</div><div class="p-name">Social Media Designs</div></div><div class="p-icon"><i class="fa-solid fa-arrow-up-right"></i></div></div>
+
+      <div class="p-card reveal" data-cat="wedding"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=700&q=80" alt="Cinematic wedding couple portrait"><div class="p-overlay"><div class="p-cat">Film</div><div class="p-name">Wedding Editing</div></div><div class="p-icon"><i class="fa-solid fa-play"></i></div></div>
+
+      <div class="p-card reveal" data-cat="reels"><img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=700&q=80" alt="Phone showing a business reel"><div class="p-overlay"><div class="p-cat">Reels</div><div class="p-name">Business Reels</div></div><div class="p-icon"><i class="fa-solid fa-play"></i></div></div>
+
+      <div class="p-card reveal" data-cat="design"><img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=700&q=80" alt="Brand identity flat lay design"><div class="p-overlay"><div class="p-cat">Design</div><div class="p-name">Brand Identity</div></div><div class="p-icon"><i class="fa-solid fa-arrow-up-right"></i></div></div>
+
+      <div class="p-card reveal" data-cat="reels"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=700&q=80" alt="Short video editing on a laptop"><div class="p-overlay"><div class="p-cat">Reels</div><div class="p-name">Short Videos</div></div><div class="p-icon"><i class="fa-solid fa-play"></i></div></div>
+
+      <div class="p-card reveal" data-cat="design"><img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=700&q=80" alt="Poster design layout"><div class="p-overlay"><div class="p-cat">Design</div><div class="p-name">Posters</div></div><div class="p-icon"><i class="fa-solid fa-arrow-up-right"></i></div></div>
+
+      <div class="p-card reveal" data-cat="design"><img src="https://images.unsplash.com/photo-1558655146-364adaf1fcc9?auto=format&fit=crop&w=700&q=80" alt="Logo design sketches and branding"><div class="p-overlay"><div class="p-cat">Design</div><div class="p-name">Logos</div></div><div class="p-icon"><i class="fa-solid fa-arrow-up-right"></i></div></div>
+
+      <div class="p-card reveal" data-cat="wedding"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=700&q=80" alt="Indian wedding ceremony highlight moment"><div class="p-overlay"><div class="p-cat">Film</div><div class="p-name">Wedding Editing</div></div><div class="p-icon"><i class="fa-solid fa-play"></i></div></div>
+
+      <div class="p-card reveal" data-cat="reels"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=700&q=80" alt="YouTube thumbnail design on screen"><div class="p-overlay"><div class="p-cat">Design</div><div class="p-name">YouTube Thumbnails</div></div><div class="p-icon"><i class="fa-solid fa-arrow-up-right"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE ME -->
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="eyebrow">Why Work With Me</div>
+    <h2 class="section-title reveal">Freelance Craft.<br>Studio-Level Care.</h2>
+
+    <div class="why-grid reveal">
+      <div class="why-item"><i class="fa-solid fa-gem"></i><h4>Premium Quality</h4></div>
+      <div class="why-item"><i class="fa-solid fa-bolt"></i><h4>Fast Delivery</h4></div>
+      <div class="why-item"><i class="fa-solid fa-wand-magic-sparkles"></i><h4>Unlimited Creativity</h4></div>
+      <div class="why-item"><i class="fa-solid fa-face-smile"></i><h4>Client Satisfaction</h4></div>
+      <div class="why-item"><i class="fa-solid fa-tags"></i><h4>Affordable Pricing</h4></div>
+      <div class="why-item"><i class="fa-solid fa-comments"></i><h4>Quick Communication</h4></div>
+      <div class="why-item"><i class="fa-solid fa-diagram-project"></i><h4>Professional Workflow</h4></div>
+      <div class="why-item"><i class="fa-solid fa-certificate"></i><h4>100% Original Designs</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="wrap">
+    <div class="eyebrow">Client Reviews</div>
+    <h2 class="section-title reveal">Words From<br>People I've Worked With.</h2>
+
+    <div class="t-grid">
+      <div class="t-card reveal">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Sagar delivered exactly what we wanted. Highly recommended."</p>
+        <div class="t-name">Verified Client</div>
+        <div class="t-role">Graphic Design Project</div>
+      </div>
+      <div class="t-card reveal">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Amazing wedding editing with a cinematic feel."</p>
+        <div class="t-name">Verified Client</div>
+        <div class="t-role">Wedding Highlight Film</div>
+      </div>
+      <div class="t-card reveal">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Our business reels gained much better engagement."</p>
+        <div class="t-name">Verified Client</div>
+        <div class="t-role">Business Short-Form Video</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="eyebrow">Tools &amp; Expertise</div>
+    <h2 class="section-title reveal">Skills I Bring<br>To Every Project.</h2>
+
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h3>Graphic Design</h3>
+        <div class="skill-row"><div class="top"><span>Adobe Photoshop</span><span>95%</span></div><div class="bar"><span data-w="95"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Adobe Illustrator</span><span>90%</span></div><div class="bar"><span data-w="90"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Canva Pro</span><span>92%</span></div><div class="bar"><span data-w="92"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Branding</span><span>88%</span></div><div class="bar"><span data-w="88"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Social Media Design</span><span>93%</span></div><div class="bar"><span data-w="93"></span></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Video Editing</h3>
+        <div class="skill-row"><div class="top"><span>Adobe Premiere Pro</span><span>96%</span></div><div class="bar"><span data-w="96"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Adobe After Effects</span><span>89%</span></div><div class="bar"><span data-w="89"></span></div></div>
+        <div class="skill-row"><div class="top"><span>CapCut Pro</span><span>94%</span></div><div class="bar"><span data-w="94"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Motion Graphics</span><span>87%</span></div><div class="bar"><span data-w="87"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Color Grading</span><span>91%</span></div><div class="bar"><span data-w="91"></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="eyebrow">Get In Touch</div>
+      <h2 class="section-title reveal">Let's Build Something<br>Amazing Together.</h2>
+      <p class="section-lead reveal">Tell me about your project, or reach out directly through any of the channels below.</p>
+
+      <div class="contact-cards reveal">
+        <a class="c-card" href="mailto:sv702172@gmail.com">
+          <i class="fa-solid fa-envelope"></i>
+          <div><div class="c-label">Email</div><div class="c-value">sv702172@gmail.com</div></div>
+        </a>
+        <a class="c-card" href="https://wa.me/917488925205" target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp"></i>
+          <div><div class="c-label">WhatsApp</div><div class="c-value">+91 74889 25205</div></div>
+        </a>
+        <a class="c-card" href="https://www.instagram.com/sagar__editorr/" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i>
+          <div><div class="c-label">Instagram</div><div class="c-value">@sagar__editorr</div></div>
+        </a>
+        <a class="c-card" href="https://www.facebook.com/sagar.kunar.35574" target="_blank" rel="noopener">
+          <i class="fa-brands fa-facebook-f"></i>
+          <div><div class="c-label">Facebook</div><div class="c-value">Sagar Kunar</div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <form id="contact-form" action="https://formsubmit.co/sv702172@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New inquiry from portfolio website">
+        <input type="hidden" name="_captcha" value="false">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="Full Name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="Email" required placeholder="you@email.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="Phone" placeholder="+91 00000 00000">
+          </div>
+          <div class="form-group">
+            <label for="service">Service Required</label>
+            <select id="service" name="Service Required">
+              <option>Graphic Design</option>
+              <option>Wedding Highlight Editing</option>
+              <option>Business Short-Form Video</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="Message" rows="4" required placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit</button>
+        <p class="form-note">I usually reply within a few hours.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Sagar<span>Verma</span></div>
+        <p class="footer-tag">Creative Graphic Designer &amp; Video Editor. Let's build something amazing together.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/sagar__editorr/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/sagar.kunar.35574" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://wa.me/917488925205" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="mailto:sv702172@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigate</h5>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:sv702172@gmail.com">sv702172@gmail.com</a>
+        <a href="https://wa.me/917488925205" target="_blank" rel="noopener">7488925205</a>
+        <a href="https://www.instagram.com/sagar__editorr/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/sagar.kunar.35574" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Sagar Verma. All Rights Reserved.</span>
+      <span>Designed &amp; built with intention.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/917488925205" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script>
+// loader
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('hide'),600);
+});
+
+// custom cursor
+const dot=document.querySelector('.cursor-dot'), ring=document.querySelector('.cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+function loop(){rx+=(mx-rx)*0.16;ry+=(my-ry)*0.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);}
+loop();
+document.querySelectorAll('a,button,.filter-btn,.panel,.p-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('grow'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('grow'));
+});
+
+// scroll progress + navbar state
+const progress=document.getElementById('progress'), header=document.getElementById('header');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  progress.style.width=pct+'%';
+  header.classList.toggle('scrolled',h.scrollTop>40);
+});
+
+// mobile nav
+const burger=document.getElementById('burger'), nav=document.getElementById('nav');
+burger.addEventListener('click',()=>{nav.classList.toggle('open');burger.classList.toggle('open');});
+document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+// scroll reveal
+const revealEls=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+},{threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+
+// counters
+const counters=document.querySelectorAll('.counter .num');
+const cio=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const el=en.target, target=+el.dataset.count; let cur=0;
+      const step=Math.max(1,Math.floor(target/60));
+      const t=setInterval(()=>{ cur+=step; if(cur>=target){cur=target;clearInterval(t);} el.textContent=cur; },28);
+      cio.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+counters.forEach(c=>cio.observe(c));
+
+// skill bars
+const bars=document.querySelectorAll('.bar span');
+const bio=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){ en.target.style.width=en.target.dataset.w+'%'; bio.unobserve(en.target); }
+  });
+},{threshold:0.4});
+bars.forEach(b=>bio.observe(b));
+
+// portfolio filter
+const filterBtns=document.querySelectorAll('.filter-btn');
+const cards=document.querySelectorAll('.p-card');
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    cards.forEach(c=>{
+      const show = f==='all' || c.dataset.cat===f;
+      c.style.display = show ? '' : 'none';
+    });
+  });
+});
+
+// triptych panel click -> scroll to matching service
+document.querySelectorAll('.panel').forEach(p=>{
+  p.addEventListener('click',()=>{
+    const t=document.getElementById(p.dataset.target);
+    if(t) t.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+});
+
+// contact form (no backend attached by default)
+document.getElementById('contact-form').addEventListener('submit',function(e){
+  // formsubmit.co handles delivery to sv702172@gmail.com; no extra JS needed.
+});
+</script>
+</body>
+</html>
